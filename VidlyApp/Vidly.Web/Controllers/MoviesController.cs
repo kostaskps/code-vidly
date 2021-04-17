@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 using Vidly.Web.Models;
 using Vidly.Web.ViewModels;
 
@@ -19,15 +16,15 @@ namespace Vidly.Web.Controllers
         public IActionResult Random()
         {
             var movie = new Models.Movie() { Name = "Shrek!" };
-            var customers = new List<Customer> 
+            var customers = new List<Customer>
             {
                 new Customer {Name = "Customer 1"},
                 new Customer {Name = "Customer 2"}
             };
-            var viewModel = new RandomMovieViewModel 
-            { 
-                Movie = movie, 
-                Customers = customers 
+            var viewModel = new RandomMovieViewModel
+            {
+                Movie = movie,
+                Customers = customers
             };
 
             return View(viewModel);
@@ -38,7 +35,7 @@ namespace Vidly.Web.Controllers
             return Content("id = " + id);
         }
 
-        
+
 
         [Route("movies/released/{year}/{month:regex(\\d{{2}}):range(1,12)}")]
         public IActionResult ByReleaseDate(int year, int month)
