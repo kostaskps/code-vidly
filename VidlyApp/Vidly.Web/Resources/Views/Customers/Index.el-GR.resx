@@ -126,6 +126,9 @@
   <data name="DiscountRate" xml:space="preserve">
     <value>Έκπτωση</value>
   </data>
+  <data name="MembershipType" xml:space="preserve">
+    <value>Συνδρομή</value>
+  </data>
   <data name="NoCustomers" xml:space="preserve">
     <value>Δεν υπάρχουν πελάτες</value>
   </data>
