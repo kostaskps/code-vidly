@@ -123,6 +123,9 @@
   <data name="Customers" xml:space="preserve">
     <value>Πελάτες</value>
   </data>
+  <data name="DiscountRate" xml:space="preserve">
+    <value>Έκπτωση</value>
+  </data>
   <data name="NoCustomers" xml:space="preserve">
     <value>Δεν υπάρχουν πελάτες</value>
   </data>

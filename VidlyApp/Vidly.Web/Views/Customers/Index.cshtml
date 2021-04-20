@@ -20,6 +20,7 @@ else
         <thead>
             <tr>
                 <th>@ViewLocalizer["CustomerName"]</th>
+                <th>@ViewLocalizer["DiscountRate"]</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,7 @@ else
             {
                 <tr>
                     <td>@Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id })</td>
+                    <td>@customer.MembershipType.DiscountRate%</td>
                 </tr>
             }
         </tbody>

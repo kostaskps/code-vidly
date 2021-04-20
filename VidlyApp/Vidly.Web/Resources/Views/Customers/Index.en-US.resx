@@ -123,6 +123,9 @@
   <data name="Customers" xml:space="preserve">
     <value>Customers</value>
   </data>
+  <data name="DiscountRate" xml:space="preserve">
+    <value>Discount Rate</value>
+  </data>
   <data name="NoCustomers" xml:space="preserve">
     <value>We don't have any customers yet.</value>
   </data>
