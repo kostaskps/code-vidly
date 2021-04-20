@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Vidly.Web.Models;
 
-namespace Vidly.Web.Data
+namespace Vidly.Web.DataAccess
 {
     public class VidlyDBContext : DbContext
     {

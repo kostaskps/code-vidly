@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Vidly.Web.DataAccess;
 
 namespace Vidly.Web
 {
@@ -70,7 +71,7 @@ namespace Vidly.Web
             });
             #endregion Register_Localization_Services
 
-            services.AddDbContext<Data.VidlyDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<VidlyDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllersWithViews();
         }
