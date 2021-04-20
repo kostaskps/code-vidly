@@ -71,7 +71,13 @@ namespace Vidly.Web
             });
             #endregion Register_Localization_Services
 
-            services.AddDbContext<VidlyDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            #region Register_Entity_Framework_Services
+            // Register the DbContext with DI framework
+            services.AddDbContext<VidlyDBContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
+            #endregion Register_Entity_Framework_Services
 
             services.AddControllersWithViews();
         }
