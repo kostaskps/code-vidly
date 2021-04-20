@@ -10,10 +10,10 @@ namespace Vidly.Web.DataAccess
         public static void SeedMembershipTypes(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<MembershipType>().HasData(
-                new MembershipType { Id = 1, SignupFee = 0, DurationInMonths = 0, DiscountRate = 0 },
-                new MembershipType { Id = 2, SignupFee = 30, DurationInMonths = 1, DiscountRate = 10 },
-                new MembershipType { Id = 3, SignupFee = 90, DurationInMonths = 3, DiscountRate = 15 },
-                new MembershipType { Id = 4, SignupFee = 300, DurationInMonths = 12, DiscountRate = 2 }
+                new MembershipType { Id = 1, SignupFee = 0, DurationInMonths = 0, DiscountRate = 0, Name = "Pay as You Go" },
+                new MembershipType { Id = 2, SignupFee = 30, DurationInMonths = 1, DiscountRate = 10, Name = "Monthly" },
+                new MembershipType { Id = 3, SignupFee = 90, DurationInMonths = 3, DiscountRate = 15, Name = "Quarterly" },
+                new MembershipType { Id = 4, SignupFee = 300, DurationInMonths = 12, DiscountRate = 2, Name = "Yearly" }
             );
         }
     }
