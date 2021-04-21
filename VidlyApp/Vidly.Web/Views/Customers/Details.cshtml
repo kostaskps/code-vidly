@@ -1,4 +1,7 @@
-﻿@model Vidly.Web.Models.Customer
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer ViewLocalizer
+@model Vidly.Web.Models.Customer
+
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,7 +11,12 @@
 <div class="card border-primary mb-3" style="max-width: 20rem;">
     <div class="card-header">@Model.Name</div>
     <div class="card-body">
-        <h4 class="card-title">Primary card title</h4>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <ul>
+            <li>@ViewLocalizer["MembershipType"]: @Model.MembershipType.Name</li>
+            @if (Model.Birthdate.HasValue)
+            {
+                <li>@ViewLocalizer["Birthdate"]: @Model.Birthdate.Value.ToShortDateString()</li>
+            }
+        </ul>
     </div>
 </div>
