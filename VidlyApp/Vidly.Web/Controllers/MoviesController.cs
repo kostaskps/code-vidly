@@ -37,5 +37,10 @@ namespace Vidly.Web.Controllers
         {
             return Content("id = " + id);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            _dbContext.Dispose();
+        }
     }
 }
