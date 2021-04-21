@@ -16,5 +16,16 @@ namespace Vidly.Web.DataAccess
                 new MembershipType { Id = 4, SignupFee = 300, DurationInMonths = 12, DiscountRate = 2, Name = "Yearly" }
             );
         }
+
+        public static void SeedGenresTypes(this ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Genres>().HasData(
+                new Genres { Id = 1, Name = "Action" },
+                new Genres { Id = 2, Name = "Thriller" },
+                new Genres { Id = 3, Name = "Family" },
+                new Genres { Id = 4, Name = "Romance" },
+                new Genres { Id = 5, Name = "Comedy" }
+            ); ;
+        }
     }
 }

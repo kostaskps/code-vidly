@@ -12,6 +12,7 @@ namespace Vidly.Web.DataAccess
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.SeedMembershipTypes();
+            modelBuilder.SeedGenresTypes();
         }
 
         public DbSet<Customer> Customers { get; set; }
