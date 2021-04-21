@@ -41,8 +41,18 @@ namespace Vidly.Web
             {
                 var supportedCultures = new[]
                 {
-                    new CultureInfo("en-US"),
-                    new CultureInfo("el-GR")
+                    new CultureInfo("en-US"){
+                        DateTimeFormat =
+                        {
+                            ShortDatePattern = "MM/dd/yyyy"
+                        }
+                    },
+                    new CultureInfo("el-GR"){
+                        DateTimeFormat =
+                        {
+                            ShortDatePattern = "dd/MM/yyyy"
+                        }
+                    }
                 };
 
                 // State what the default culture for your application is. This will be used if no specific culture
