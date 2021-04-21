@@ -117,19 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CustomerName" xml:space="preserve">
-    <value>Customer Name</value>
+  <data name="Birthdate" xml:space="preserve">
+    <value>Ημ/νια Γέννησης</value>
   </data>
-  <data name="Customers" xml:space="preserve">
-    <value>Customers</value>
-  </data>
-  <data name="DiscountRate" xml:space="preserve">
-    <value>Discount Rate</value>
+  <data name="CustomerDetails" xml:space="preserve">
+    <value>Λεπτομέρειες Πελάτη</value>
   </data>
   <data name="MembershipType" xml:space="preserve">
-    <value>Membership Type</value>
-  </data>
-  <data name="NoCustomers" xml:space="preserve">
-    <value>We don't have any customers yet.</value>
+    <value>Συνδρομή</value>
   </data>
 </root>
