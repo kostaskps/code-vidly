@@ -35,14 +35,10 @@ namespace Vidly.Web.Controllers
             return View(customer);
         }
 
-        private IEnumerable<Customer> ProvideCustomers()
+        [Route("customers/create/")]
+        public IActionResult New()
         {
-            var customers = new List<Customer>
-            {
-                new Customer { Id = 1, Name = "John Smith"},
-                new Customer { Id = 2, Name = "Mary Williams"}
-            };
-            return customers;
+            return View();
         }
 
         protected override void Dispose(bool disposing)

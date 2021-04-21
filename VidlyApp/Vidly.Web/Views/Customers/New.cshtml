@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer ViewLocalizer
+
+@model Vidly.Web.Models.Customer
+
+@{
+    ViewData["Title"] = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>New Customer</h1>
+
+@using (@Html.BeginForm("Create", "Customers"))
+{
+    <fieldset>
+        <div class="form-group" style="max-width: 20rem;">
+            @Html.LabelFor(c => c.Name, @ViewLocalizer["CustomerName"].Value)
+            @Html.TextBoxFor(c => c.Name, new { @class = "form-control" })
+        </div>
+        <div class="form-group" style="max-width: 20rem;">
+            @Html.LabelFor(c => c.Birthdate, @ViewLocalizer["Birthdate"].Value)
+            @Html.TextBoxFor(c => c.Birthdate, new { @class = "form-control" })
+        </div>
+        <div class="form-check">
+            <label class="form-check-label">
+                @Html.CheckBoxFor(c => c.IsSubscribedToNewsletter, new { @class = "form-check-input" }) @ViewLocalizer["IsSubscribedToNewsletter"].Value
+            </label>
+        </div>
+    </fieldset>
+}
