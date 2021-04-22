@@ -6,11 +6,6 @@
 @{
     ViewData["Title"] = "New";
     Layout = "~/Views/Shared/_Layout.cshtml";
-
-    var listItems = Model.MembershipTypes
-        .Select(mt => new SelectListItem { Value = mt.Name, Text = ViewLocalizer.GetString(mt.Name) })
-        .ToList();
-    
 }
 
 <h1>@ViewLocalizer["NewCustomer"]</h1>
