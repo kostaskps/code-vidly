@@ -126,4 +126,25 @@
   <data name="IsSubscribedToNewsletter" xml:space="preserve">
     <value>Εγγεγραμένος στις ενημερώσεις;</value>
   </data>
+  <data name="MembershipType" xml:space="preserve">
+    <value>Συνδρομή</value>
+  </data>
+  <data name="Monthly" xml:space="preserve">
+    <value>Μηνιαία</value>
+  </data>
+  <data name="NewCustomer" xml:space="preserve">
+    <value>Νέος Πελάτης</value>
+  </data>
+  <data name="Quarterly" xml:space="preserve">
+    <value>Τρίμηνη</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Αποθήκευση</value>
+  </data>
+  <data name="SelectMembershipType" xml:space="preserve">
+    <value>Επιλογή Συνδρομής</value>
+  </data>
+  <data name="Yearly" xml:space="preserve">
+    <value>Ετήσια</value>
+  </data>
 </root>

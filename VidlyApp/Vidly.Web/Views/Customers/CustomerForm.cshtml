@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer ViewLocalizer
+
+@model Vidly.Web.ViewModels.CustomerFormViewModel
+
+@{
+    ViewData["Title"] = "New";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var listItems = Model.MembershipTypes
+        .Select(mt => new SelectListItem { Value = mt.Name, Text = ViewLocalizer.GetString(mt.Name) })
+        .ToList();
+    
+}
+
+<h1>@ViewLocalizer["NewCustomer"]</h1>
+
+@using (@Html.BeginForm("Save", "Customers"))
+{
+<fieldset>
+    <div class="form-group" style="max-width: 20rem;">
+        @Html.LabelFor(vm => vm.Customer.Name, @ViewLocalizer["CustomerName"].Value)
+        @Html.TextBoxFor(vm => vm.Customer.Name, new { @class = "form-control" })
+    </div>
+    <div class="form-group" style="max-width: 20rem;">
+        @Html.LabelFor(vm => vm.Customer.Birthdate, @ViewLocalizer["Birthdate"].Value)
+        @Html.TextBoxFor(vm => vm.Customer.Birthdate, "{0:dd MMM yyyy}", new { @class = "form-control" })
+    </div>
+    <div class="form-group" style="max-width: 20rem;">
+        @Html.LabelFor(vm => vm.Customer.MembershipTypeId, @ViewLocalizer["MembershipType"].Value)
+        @Html.DropDownListFor(vm => vm.Customer.MembershipTypeId, new SelectList(Model.MembershipTypes, "Id", "Name"), @ViewLocalizer["SelectMembershipType"].Value, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <div class="custom-control custom-checkbox">
+            @Html.CheckBoxFor(c => c.Customer.IsSubscribedToNewsletter, new { @class = "custom-control-input" })
+            @Html.LabelFor(c => c.Customer.IsSubscribedToNewsletter, @ViewLocalizer["IsSubscribedToNewsletter"].Value, new { @class = "custom-control-label" })
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.Customer.Id)
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">@ViewLocalizer["Save"]</button>
+    </div>
+</fieldset>
+}

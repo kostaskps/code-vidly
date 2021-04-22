@@ -126,4 +126,25 @@
   <data name="IsSubscribedToNewsletter" xml:space="preserve">
     <value>Subscribed to Newsletter?</value>
   </data>
+  <data name="MembershipType" xml:space="preserve">
+    <value>Membership Type</value>
+  </data>
+  <data name="Monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="NewCustomer" xml:space="preserve">
+    <value>New Customer</value>
+  </data>
+  <data name="Quarterly" xml:space="preserve">
+    <value>Quarterly</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SelectMembershipType" xml:space="preserve">
+    <value>Select Membership Type</value>
+  </data>
+  <data name="Yearly" xml:space="preserve">
+    <value>Yearly</value>
+  </data>
 </root>
