@@ -19,12 +19,12 @@ namespace Vidly.Web.DataAccess
 
         public static void SeedGenresTypes(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Genres>().HasData(
-                new Genres { Id = 1, Name = "Action" },
-                new Genres { Id = 2, Name = "Thriller" },
-                new Genres { Id = 3, Name = "Family" },
-                new Genres { Id = 4, Name = "Romance" },
-                new Genres { Id = 5, Name = "Comedy" }
+            modelBuilder.Entity<Genre>().HasData(
+                new Genre { Id = 1, Name = "Action" },
+                new Genre { Id = 2, Name = "Thriller" },
+                new Genre { Id = 3, Name = "Family" },
+                new Genre { Id = 4, Name = "Romance" },
+                new Genre { Id = 5, Name = "Comedy" }
             ); ;
         }
     }

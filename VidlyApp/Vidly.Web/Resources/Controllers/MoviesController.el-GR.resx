@@ -117,19 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Genre" xml:space="preserve">
-    <value>Genre</value>
+  <data name="Action" xml:space="preserve">
+    <value>Δράσης</value>
   </data>
-  <data name="MovieName" xml:space="preserve">
-    <value>Movie Name</value>
+  <data name="Comedy" xml:space="preserve">
+    <value>Κωμωδία</value>
   </data>
-  <data name="Movies" xml:space="preserve">
-    <value>Movies</value>
+  <data name="Family" xml:space="preserve">
+    <value>Οικογενειακή</value>
   </data>
-  <data name="NewMovie" xml:space="preserve">
-    <value>New Movie</value>
+  <data name="Romance" xml:space="preserve">
+    <value>Ρομαντική</value>
   </data>
-  <data name="NoMovies" xml:space="preserve">
-    <value>We don't have any movies yet.</value>
+  <data name="Thriller" xml:space="preserve">
+    <value>Θρίλερ</value>
   </data>
 </root>

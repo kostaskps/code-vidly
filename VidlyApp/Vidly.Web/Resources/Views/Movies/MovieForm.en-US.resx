@@ -117,19 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EditMovie" xml:space="preserve">
+    <value>Edit Movie</value>
+  </data>
   <data name="Genre" xml:space="preserve">
     <value>Genre</value>
   </data>
   <data name="MovieName" xml:space="preserve">
     <value>Movie Name</value>
   </data>
-  <data name="Movies" xml:space="preserve">
-    <value>Movies</value>
-  </data>
   <data name="NewMovie" xml:space="preserve">
     <value>New Movie</value>
   </data>
-  <data name="NoMovies" xml:space="preserve">
-    <value>We don't have any movies yet.</value>
+  <data name="ReleaseDate" xml:space="preserve">
+    <value>Release Date</value>
+  </data>
+  <data name="SelectGenre" xml:space="preserve">
+    <value>-- Select Genre --</value>
+  </data>
+  <data name="StockNumber" xml:space="preserve">
+    <value>Number in Stock</value>
   </data>
 </root>

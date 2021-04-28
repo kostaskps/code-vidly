@@ -126,6 +126,9 @@
   <data name="Movies" xml:space="preserve">
     <value>Ταινίες</value>
   </data>
+  <data name="NewMovie" xml:space="preserve">
+    <value>Νέα Ταινία</value>
+  </data>
   <data name="NoMovies" xml:space="preserve">
     <value>Δεν υπάρχουν διαθέσιμες ταινίες</value>
   </data>

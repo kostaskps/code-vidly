@@ -8,7 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Vidly.Web.Contracts;
 using Vidly.Web.DataAccess;
+using Vidly.Web.DataAccess.Repositories;
 
 namespace Vidly.Web
 {
@@ -88,6 +90,15 @@ namespace Vidly.Web
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
             #endregion Register_Entity_Framework_Services
+
+            #region Register_Repository_Services
+            services.AddTransient(typeof(IProvideVidlyRepository<>), typeof(VidlyRepositoryBase<>));
+            services.AddTransient<IProvideGenresRepository, GenresRepository>();
+
+            // Finally register UnitOfWork
+            services.AddTransient<IProvideUnitOfWork, UnitOfWork>();
+            #endregion Register_Repository_Services
+
 
             services.AddControllersWithViews();
         }
