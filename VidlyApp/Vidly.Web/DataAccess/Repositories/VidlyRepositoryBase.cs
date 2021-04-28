@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Vidly.Web.Contracts;
 
 namespace Vidly.Web.DataAccess.Repositories
@@ -30,13 +31,9 @@ namespace Vidly.Web.DataAccess.Repositories
             return VidlyDbContext.Set<T>().ToList();
         }
 
-        public async IAsyncEnumerable<T> GetAllAsync()
+        public async Task<List<T>> GetAllAsync()
         {
-            var iterator = VidlyDbContext.Set<T>().AsAsyncEnumerable().ConfigureAwait(false).GetAsyncEnumerator();
-            while (await iterator.MoveNextAsync())
-            {
-                yield return iterator.Current;
-            }
+            return await VidlyDbContext.Set<T>().ToListAsync().ConfigureAwait(false);
         }
 
         public T GetById(int id)

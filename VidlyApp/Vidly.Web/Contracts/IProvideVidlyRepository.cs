@@ -12,7 +12,7 @@ namespace Vidly.Web.Contracts
     {
         T GetById(int id);
         IEnumerable<T> GetAll();
-        IAsyncEnumerable<T> GetAllAsync();
+        Task<List<T>> GetAllAsync();
         void Add(T entity);
         void AddRange(IEnumerable<T> entities);
         void Remove(T entity);

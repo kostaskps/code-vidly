@@ -29,10 +29,11 @@ namespace Vidly.Web.Controllers
         {
             //var movies = _dbContext.Movies.Include(m => m.Genre).AsNoTracking();
             var moviesFromDB = _dbContext.Movies;
-
+            var genresInDB = await UnitOfWork.Genres.GetAllAsync();
+            
             foreach(var movie in moviesFromDB)
             {
-                await foreach(var genre in UnitOfWork.Genres.GetAllAsync())
+                foreach(var genre in genresInDB)
                 {
                     if (genre.Id != movie.GenreId)
                         continue;
