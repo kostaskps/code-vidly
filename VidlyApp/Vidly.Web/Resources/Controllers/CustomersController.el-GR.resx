@@ -117,34 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Birthdate" xml:space="preserve">
-    <value>Date of Birth</value>
-  </data>
-  <data name="CustomerName" xml:space="preserve">
-    <value>Customer Name</value>
-  </data>
-  <data name="IsSubscribedToNewsletter" xml:space="preserve">
-    <value>Subscribed to Newsletter?</value>
-  </data>
-  <data name="MembershipType" xml:space="preserve">
-    <value>Membership Type</value>
-  </data>
   <data name="Monthly" xml:space="preserve">
-    <value>Monthly</value>
-  </data>
-  <data name="NewCustomer" xml:space="preserve">
-    <value>New Customer</value>
+    <value>Μηνιαία</value>
   </data>
   <data name="Quarterly" xml:space="preserve">
-    <value>Quarterly</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Τρίμηνη</value>
   </data>
   <data name="SelectMembershipType" xml:space="preserve">
-    <value>Select Membership Type</value>
+    <value>-- Επιλογή Συνδρομής --</value>
   </data>
   <data name="Yearly" xml:space="preserve">
-    <value>Yearly</value>
+    <value>Ετήσια</value>
   </data>
 </root>

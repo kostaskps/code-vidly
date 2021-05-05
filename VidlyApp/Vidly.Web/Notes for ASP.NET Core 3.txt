@@ -1,0 +1,7 @@
+Validation system changed in ASP.NET Core 3+ projects
+so, for the validation to work, you have to make Model Properties nullable to trigger NULL check, like in Customer.cs
+  https://stackoverflow.com/questions/43281345/mvc-net-core-model-validation-the-value-is-invalid-error
+===============================================================================================================
+To have access in StringLocalizer for custom Classes that inherit from ValidationAttribute
+an example is in Min18YearsIfAMemberAttribute.cs
+  https://stackoverflow.com/questions/57776877/asp-net-core-custom-validation-error-message-not-localized

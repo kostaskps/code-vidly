@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using Vidly.Web.DataAccess;
 using Vidly.Web.Models;
 using Vidly.Web.ViewModels;
@@ -11,10 +13,12 @@ namespace Vidly.Web.Controllers
     public class CustomersController : Controller
     {
         private VidlyDBContext _dbContext;
+        private readonly IStringLocalizer<CustomersController> _stringLocalizer;
 
-        public CustomersController(VidlyDBContext dBContext)
+        public CustomersController(VidlyDBContext dBContext, IStringLocalizer<CustomersController> localizer)
         {
             _dbContext = dBContext;
+            _stringLocalizer = localizer;
         }
 
         public IActionResult Index()
@@ -37,10 +41,20 @@ namespace Vidly.Web.Controllers
 
         public async Task<IActionResult> New()
         {
-            var membershipTypes = await _dbContext.MembershipTypes.ToListAsync();
+            var membershipTypesInDB = await _dbContext.MembershipTypes.ToListAsync();
+
+            var list = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
+
+            foreach (var membershipType in membershipTypesInDB)
+            {
+                string localizedText = _stringLocalizer[membershipType.Name];
+                list.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(localizedText, membershipType.Id.ToString()));
+            }
+
             var viewModel = new CustomerFormViewModel
             {
-                MembershipTypes = membershipTypes
+                Customer = new Customer(),
+                MembershipTypesList = list
             };
 
             return View("CustomerForm", viewModel);
@@ -70,24 +84,42 @@ namespace Vidly.Web.Controllers
          * more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
          */
         [HttpPost]
-        public async Task<IActionResult> Save(Customer customer)
+        public async Task<IActionResult> Save(CustomerFormViewModel vm)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if(customer.Id == 0)
-                    _dbContext.Customers.Add(customer);
-                else
+                var membershipTypesInDB = await _dbContext.MembershipTypes.ToListAsync();
+
+                var list = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
+
+                foreach (var membershipType in membershipTypesInDB)
                 {
-                    var customerInDB = await _dbContext.Customers.SingleOrDefaultAsync(c => c.Id == customer.Id);
-                    customerInDB.Name = customer.Name;
-                    customerInDB.Birthdate = customer.Birthdate;
-                    customerInDB.MembershipTypeId = customer.MembershipTypeId;
-                    customerInDB.IsSubscribedToNewsletter = customer.IsSubscribedToNewsletter;
+                    string localizedText = _stringLocalizer[membershipType.Name];
+                    list.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(localizedText, membershipType.Id.ToString()));
                 }
-                await _dbContext.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                var viewModel = new CustomerFormViewModel
+                {
+                    Customer = vm.Customer,
+                    //SelectedMembershipType = vm.SelectedMembershipType,
+                    MembershipTypesList = list
+                };
+
+                return View("CustomerForm", viewModel);
             }
-            return View();
+
+            if (vm.Customer.Id == 0)
+                _dbContext.Customers.Add(vm.Customer);
+            else
+            {
+                var customerInDB = await _dbContext.Customers.SingleOrDefaultAsync(c => c.Id == vm.Customer.Id);
+                customerInDB.Name = vm.Customer.Name;
+                customerInDB.Birthdate = vm.Customer.Birthdate;
+                customerInDB.MembershipTypeId = vm.Customer.MembershipTypeId;
+                customerInDB.IsSubscribedToNewsletter = vm.Customer.IsSubscribedToNewsletter;
+            }
+            await _dbContext.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         protected override void Dispose(bool disposing)
