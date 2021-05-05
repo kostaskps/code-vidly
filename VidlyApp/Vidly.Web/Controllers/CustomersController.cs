@@ -84,6 +84,7 @@ namespace Vidly.Web.Controllers
          * more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
          */
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Save(CustomerFormViewModel vm)
         {
             if (!ModelState.IsValid)
