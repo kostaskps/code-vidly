@@ -56,22 +56,11 @@ namespace Vidly.Web.Controllers
             return View(movie);
         }
 
-        public IActionResult New()
+        public async Task<IActionResult> New()
         {
-            var genresFromDB = UnitOfWork.Genres.GetAll();
-
-            var genresList = new List<SelectListItem>();
-
-            foreach (var genre in genresFromDB)
-            {
-                string localizedText = _stringLocalizer[genre.Name];
-                genresList.Add(new SelectListItem(localizedText, genre.Id.ToString()));
-            }
-
             var viewModel = new MovieFormViewModel
             {
-                //Movie = new Movie(),
-                Genres = genresList
+                GenresList = await GetLocalizedGenresDropDownAsync()
             };
 
             return View("MovieForm", viewModel);
@@ -86,21 +75,9 @@ namespace Vidly.Web.Controllers
             if (movieFromDB == null)
                 return NotFound();
 
-            var genresFromDB = UnitOfWork.Genres.GetAll();
-            var genresList = new List<SelectListItem>();
-
-            foreach (var genre in genresFromDB)
+            var viewModel = new MovieFormViewModel(movieFromDB)
             {
-                string localizedText = _stringLocalizer[genre.Name];
-                var isSelected = movieFromDB.GenreId == genre.Id;
-                genresList.Add(new SelectListItem(localizedText, genre.Id.ToString(), isSelected));
-            }
-
-            var viewModel = new MovieFormViewModel
-            {
-                Movie = movieFromDB,
-                SelectedGenre = movieFromDB.GenreId,
-                Genres = genresList
+                GenresList = await GetLocalizedGenresDropDownAsync()
             };
 
             return View("MovieForm", viewModel);
@@ -111,25 +88,52 @@ namespace Vidly.Web.Controllers
          * more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
          */
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Save(MovieFormViewModel vm)
         {
-            if (vm.Movie.Id == 0)
+            if (!ModelState.IsValid)
             {
-                vm.Movie.DateAdded = DateTime.Now;
-                vm.Movie.GenreId = vm.SelectedGenre;
-                _dbContext.Movies.Add(vm.Movie);
+                var viewModel = new MovieFormViewModel
+                {
+                    GenresList = await GetLocalizedGenresDropDownAsync()
+                };
+
+                return View("MovieForm", viewModel);
+            }
+
+
+            if (vm.Id == 0)
+            {
+                var newMovie = new Movie(vm)
+                {
+                    DateAdded = DateTime.Now
+                };
+                _dbContext.Movies.Add(newMovie);
             }
             else
             {
-                var movieInDB = await _dbContext.Movies.SingleOrDefaultAsync(m => m.Id == vm.Movie.Id);
-                movieInDB.Name = vm.Movie.Name;
-                movieInDB.ReleaseDate = vm.Movie.ReleaseDate;
-                movieInDB.DateAdded = vm.Movie.DateAdded;
-                movieInDB.StockNumber = vm.Movie.StockNumber;
-                movieInDB.GenreId = vm.SelectedGenre;
+                var movieInDB = await _dbContext.Movies.SingleOrDefaultAsync(m => m.Id == vm.Id);
+                movieInDB.Name = vm.Name;
+                movieInDB.ReleaseDate = vm.ReleaseDate.Value;
+                movieInDB.StockNumber = vm.StockNumber.Value;
+                movieInDB.GenreId = vm.GenreId.Value;
             }
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<IEnumerable<SelectListItem>> GetLocalizedGenresDropDownAsync()
+        {
+            var genresFromDB = await UnitOfWork.Genres.GetAllAsync();
+
+            var localizedItemList = new List<SelectListItem>(genresFromDB.Count);
+
+            var enumerator = genresFromDB.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                localizedItemList.Add(new SelectListItem(_stringLocalizer[enumerator.Current.Name], enumerator.Current.Id.ToString()));
+            }
+            return localizedItemList;
         }
 
         protected override void Dispose(bool disposing)

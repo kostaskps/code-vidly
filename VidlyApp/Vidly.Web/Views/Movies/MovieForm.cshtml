@@ -4,7 +4,7 @@
 @model Vidly.Web.ViewModels.MovieFormViewModel
 
 @{
-    var title = (Model.Movie == null) ? @ViewLocalizer["NewMovie"] : @ViewLocalizer["EditMovie"];
+    var title = (Model.Id == 0) ? @ViewLocalizer["NewMovie"] : @ViewLocalizer["EditMovie"];
 
     ViewData["Title"] = title;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -16,22 +16,26 @@
 {
 <fieldset>
     <div class="form-group" style="max-width: 20rem;">
-        @Html.LabelFor(vm => vm.Movie.Name, @ViewLocalizer["MovieName"].Value)
-        @Html.TextBoxFor(vm => vm.Movie.Name, new { @class = "form-control" })
+        @Html.LabelFor(vm => vm.Name, @ViewLocalizer["MovieName"].Value)
+        @Html.TextBoxFor(vm => vm.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(vm => vm.Name)
     </div>
     <div class="form-group" style="max-width: 20rem;">
-        @Html.LabelFor(vm => vm.Movie.ReleaseDate, @ViewLocalizer["ReleaseDate"].Value)
-        @Html.TextBoxFor(vm => vm.Movie.ReleaseDate, "{0:dd MMM yyyy}", new { @class = "form-control" })
+        @Html.LabelFor(vm => vm.ReleaseDate, @ViewLocalizer["ReleaseDate"].Value)
+        @Html.TextBoxFor(vm => vm.ReleaseDate, "{0:dd MMM yyyy}", new { @class = "form-control" })
+        @Html.ValidationMessageFor(vm => vm.ReleaseDate)
     </div>
     <div class="form-group" style="max-width: 20rem;">
-        @Html.LabelFor(vm => vm.SelectedGenre, @ViewLocalizer["Genre"].Value)
-        @Html.DropDownListFor(vm => vm.SelectedGenre, new SelectList(Model.Genres, "Value", "Text"), @ViewLocalizer["SelectGenre"].Value, new { @class = "form-control" })
+        @Html.LabelFor(vm => vm.GenreId, @ViewLocalizer["Genre"].Value)
+        @Html.DropDownListFor(vm => vm.GenreId, new SelectList(Model.GenresList, "Value", "Text"), @ViewLocalizer["SelectGenre"].Value, new { @class = "form-control" })
+        @Html.ValidationMessageFor(vm => vm.GenreId)
     </div>
     <div class="form-group" style="max-width: 20rem;">
-        @Html.LabelFor(vm => vm.Movie.StockNumber, @ViewLocalizer["StockNumber"].Value)
-        @Html.TextBoxFor(vm => vm.Movie.StockNumber, new { @class = "form-control" })
+        @Html.LabelFor(vm => vm.StockNumber, @ViewLocalizer["StockNumber"].Value)
+        @Html.TextBoxFor(vm => vm.StockNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(vm => vm.StockNumber)
     </div>
-    @Html.HiddenFor(vm => vm.Movie.Id)
+    @Html.HiddenFor(vm => vm.Id)
     <div class="form-group">
         <button type="submit" class="btn btn-primary">@ViewLocalizer["Save"]</button>
     </div>
