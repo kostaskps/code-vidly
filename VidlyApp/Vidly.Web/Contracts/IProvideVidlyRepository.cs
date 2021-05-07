@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace Vidly.Web.Contracts
 {
     /// <summary>
-    /// This is a generic Interface that can be used by Vidly Domain Classes
+    /// This is the base Interface for Repositories that defines the basic entity operations
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public interface IProvideVidlyRepository<T> where T : class
