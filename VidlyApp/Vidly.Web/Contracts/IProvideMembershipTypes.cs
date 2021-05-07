@@ -2,7 +2,7 @@
 
 namespace Vidly.Web.Contracts
 {
-    public interface IProvideMembershipTypes : IProvideVidlyRepository<MembershipType>
+    public interface IProvideMembershipTypes : IProvideGenericRepository<MembershipType>
     {
 
     }

@@ -5,7 +5,7 @@ using Vidly.Web.Models;
 
 namespace Vidly.Web.DataAccess.Repositories
 {
-    public class GenresRepository : VidlyRepositoryBase<Genre>, IProvideGenres
+    public class GenresRepository : GenericRepositoryBase<Genre>, IProvideGenres
     {
         public GenresRepository(VidlyDBContext context) : base(context)
         {

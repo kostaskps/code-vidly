@@ -31,7 +31,7 @@ namespace Vidly.Web.Extensions
 
         public static IServiceCollection RegisterRepositoryServices(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddTransient(typeof(IProvideVidlyRepository<>), typeof(VidlyRepositoryBase<>));
+            serviceCollection.AddTransient(typeof(IProvideGenericRepository<>), typeof(GenericRepositoryBase<>));
             serviceCollection.AddTransient<IProvideGenres, GenresRepository>();
             serviceCollection.AddTransient<IProvideMembershipTypes, MembershipTypesRepository>();
 

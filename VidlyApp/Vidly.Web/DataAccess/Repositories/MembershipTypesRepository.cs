@@ -3,7 +3,7 @@ using Vidly.Web.Models;
 
 namespace Vidly.Web.DataAccess.Repositories
 {
-    public class MembershipTypesRepository : VidlyRepositoryBase<MembershipType>, IProvideMembershipTypes
+    public class MembershipTypesRepository : GenericRepositoryBase<MembershipType>, IProvideMembershipTypes
     {
         public MembershipTypesRepository(VidlyDBContext context) : base(context)
         {

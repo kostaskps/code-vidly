@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 namespace Vidly.Web.Contracts
 {
     /// <summary>
-    /// This is the base Interface for Repositories that defines the basic entity operations
+    /// This is the base Generic Interface for Repositories that defines the basic Entity operations
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public interface IProvideVidlyRepository<T> where T : class
+    public interface IProvideGenericRepository<T> where T : class
     {
         T GetById(int id);
         IEnumerable<T> GetAll();

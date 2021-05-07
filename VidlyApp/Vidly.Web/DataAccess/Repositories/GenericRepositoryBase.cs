@@ -6,10 +6,10 @@ using Vidly.Web.Contracts;
 
 namespace Vidly.Web.DataAccess.Repositories
 {
-    public class VidlyRepositoryBase<T> : IProvideVidlyRepository<T> where T : class
+    public class GenericRepositoryBase<T> : IProvideGenericRepository<T> where T : class
     {
         private readonly VidlyDBContext _context;
-        public VidlyRepositoryBase(VidlyDBContext context)
+        public GenericRepositoryBase(VidlyDBContext context)
         {
             _context = context;
         }
