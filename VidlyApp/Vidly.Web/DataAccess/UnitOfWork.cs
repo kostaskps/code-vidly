@@ -8,11 +8,13 @@ namespace Vidly.Web.DataAccess
         private bool disposedValue;
         private readonly VidlyDBContext _context;
 
-        public UnitOfWork(VidlyDBContext context)
+        public UnitOfWork(VidlyDBContext context, 
+            IProvideGenres genres, 
+            IProvideMembershipTypes membershipTypes)
         {
             _context = context;
-            Genres = new Repositories.GenresRepository(_context);
-            MembershipTypes = new Repositories.MembershipTypesRepository(_context);
+            Genres = genres;
+            MembershipTypes = membershipTypes;
         }
 
         public IProvideGenres Genres { get; private set; }
