@@ -17,7 +17,7 @@ namespace Vidly.Web.DataAccess
             Genres = new Repositories.GenresRepository(_context);
         }
 
-        public IProvideGenresRepository Genres { get; private set; }
+        public IProvideGenres Genres { get; private set; }
 
         /// <summary>
         /// Save all changes to the Vidly Database

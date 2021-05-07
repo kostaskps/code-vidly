@@ -4,7 +4,7 @@ namespace Vidly.Web.Contracts
 {
     public interface IProvideUnitOfWork : IDisposable
     {
-        IProvideGenresRepository Genres { get; }
+        IProvideGenres Genres { get; }
         int Complete();
     }
 }

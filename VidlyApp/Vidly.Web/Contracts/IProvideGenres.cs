@@ -3,7 +3,7 @@ using Vidly.Web.Models;
 
 namespace Vidly.Web.Contracts
 {
-    public interface IProvideGenresRepository : IProvideVidlyRepository<Genre>
+    public interface IProvideGenres : IProvideVidlyRepository<Genre>
     {
         //IEnumerable<Genres> GetAllGenres();
     }

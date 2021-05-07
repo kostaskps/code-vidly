@@ -93,7 +93,7 @@ namespace Vidly.Web
 
             #region Register_Repository_Services
             services.AddTransient(typeof(IProvideVidlyRepository<>), typeof(VidlyRepositoryBase<>));
-            services.AddTransient<IProvideGenresRepository, GenresRepository>();
+            services.AddTransient<IProvideGenres, GenresRepository>();
 
             // Finally register UnitOfWork
             services.AddTransient<IProvideUnitOfWork, UnitOfWork>();
