@@ -1,16 +1,12 @@
-using System.Globalization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
-using Vidly.Web.Contracts;
 using Vidly.Web.DataAccess;
-using Vidly.Web.DataAccess.Repositories;
+using Vidly.Web.Extensions;
 
 namespace Vidly.Web
 {
@@ -27,81 +23,10 @@ namespace Vidly.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            #region Register_Localization_Services
-            // Add the localization services to the services container
-            services.AddLocalization(options => options.ResourcesPath = "Resources");
-
-            services.AddMvc()
-                // Add support for finding localized views, based on file name suffix, e.g. Index.fr.cshtml
-                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-                // Add support for localizing strings in data annotations (e.g. validation messages) via the
-                // IStringLocalizer abstractions.
-                .AddDataAnnotationsLocalization();
-
-            // Configure supported cultures and localization options
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                var supportedCultures = new[]
-                {
-                    new CultureInfo("en-US"){
-                        DateTimeFormat =
-                        {
-                            ShortDatePattern = "MM/dd/yyyy"
-                        }
-                    },
-                    new CultureInfo("el-GR"){
-                        DateTimeFormat =
-                        {
-                            ShortDatePattern = "dd/MM/yyyy"
-                        }
-                    }
-                };
-
-                // State what the default culture for your application is. This will be used if no specific culture
-                // can be determined for a given request.
-                options.DefaultRequestCulture = new RequestCulture(supportedCultures[1]);
-
-                // You must explicitly state which cultures your application supports.
-                // These are the cultures the app supports for formatting numbers, dates, etc.
-                options.SupportedCultures = supportedCultures;
-
-                // These are the cultures the app supports for UI strings, i.e. we have localized resources for.
-                options.SupportedUICultures = supportedCultures;
-
-                // You can change which providers are configured to determine the culture for requests, or even add a custom
-                // provider with your own logic. The providers will be asked in order to provide a culture for each request,
-                // and the first to provide a non-null result that is in the configured supported cultures list will be used.
-                // By default, the following built-in providers are configured:
-                // - QueryStringRequestCultureProvider, sets culture via "culture" and "ui-culture" query string values, useful for testing
-                // - CookieRequestCultureProvider, sets culture via "ASPNET_CULTURE" cookie
-                // - AcceptLanguageHeaderRequestCultureProvider, sets culture via the "Accept-Language" request header
-                //options.RequestCultureProviders.Insert(0, new CustomRequestCultureProvider(async context =>
-                //{
-                //  // My custom request culture logic
-                //  return new ProviderCultureResult("en");
-                //}));
-            });
-            #endregion Register_Localization_Services
-
-            #region Register_Entity_Framework_Services
-            // Register the DbContext with DI framework
-            services.AddDbContext<VidlyDBContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
-            });
-            #endregion Register_Entity_Framework_Services
-
-            #region Register_Repository_Services
-            services.AddTransient(typeof(IProvideVidlyRepository<>), typeof(VidlyRepositoryBase<>));
-            services.AddTransient<IProvideGenres, GenresRepository>();
-            services.AddTransient<IProvideMembershipTypes, MembershipTypesRepository>();
-
-            // Finally register UnitOfWork
-            services.AddTransient<IProvideUnitOfWork, UnitOfWork>();
-            #endregion Register_Repository_Services
-
-
-            services.AddControllersWithViews();
+            services.AddDbContext<VidlyDBContext>(ConfigureVidlySqlServerConnection)
+                .RegisterLocalizationServices()
+                .RegisterRepositoryServices()
+                .AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -136,6 +61,11 @@ namespace Vidly.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        private void ConfigureVidlySqlServerConnection(DbContextOptionsBuilder options)
+        {
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
         }
     }
 }
