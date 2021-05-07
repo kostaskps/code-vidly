@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Vidly.Web.Models;
 
 namespace Vidly.Web.ViewModels
@@ -10,6 +11,6 @@ namespace Vidly.Web.ViewModels
 
         public Customer Customer { get; set; }
 
-        public IEnumerable<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> MembershipTypesList { get; set; }
+        public IEnumerable<SelectListItem> MembershipTypesList { get; set; }
     }
 }

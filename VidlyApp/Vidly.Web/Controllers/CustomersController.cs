@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
 using Vidly.Web.DataAccess;
@@ -43,12 +44,12 @@ namespace Vidly.Web.Controllers
         {
             var membershipTypesInDB = await _dbContext.MembershipTypes.ToListAsync();
 
-            var list = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
+            var list = new List<SelectListItem>();
 
             foreach (var membershipType in membershipTypesInDB)
             {
                 string localizedText = _stringLocalizer[membershipType.Name];
-                list.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(localizedText, membershipType.Id.ToString()));
+                list.Add(new SelectListItem(localizedText, membershipType.Id.ToString()));
             }
 
             var viewModel = new CustomerFormViewModel
@@ -91,12 +92,12 @@ namespace Vidly.Web.Controllers
             {
                 var membershipTypesInDB = await _dbContext.MembershipTypes.ToListAsync();
 
-                var list = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
+                var list = new List<SelectListItem>();
 
                 foreach (var membershipType in membershipTypesInDB)
                 {
                     string localizedText = _stringLocalizer[membershipType.Name];
-                    list.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem(localizedText, membershipType.Id.ToString()));
+                    list.Add(new SelectListItem(localizedText, membershipType.Id.ToString()));
                 }
 
                 var viewModel = new CustomerFormViewModel
