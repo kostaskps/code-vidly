@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.Extensions.Localization;
+using Vidly.Web.ViewModels;
 
 namespace Vidly.Web.Models
 {
@@ -15,15 +16,15 @@ namespace Vidly.Web.Models
             // https://stackoverflow.com/questions/57776877/asp-net-core-custom-validation-error-message-not-localized
             var stringLocalizer = validationContext.GetService(typeof(IStringLocalizer<Customer>)) as IStringLocalizer<Customer>;
 
-            var customer = validationContext.ObjectInstance as Customer;
+            var viewModel = validationContext.ObjectInstance as CustomerFormViewModel;
 
-            if (!customer.MembershipTypeId.HasValue || customer.MembershipTypeId == MembershipType.Unknown || customer.MembershipTypeId == MembershipType.PayAsYouGo)
+            if (!viewModel.MembershipTypeId.HasValue || viewModel.MembershipTypeId == MembershipType.Unknown || viewModel.MembershipTypeId == MembershipType.PayAsYouGo)
                 return ValidationResult.Success;
 
-            if (!customer.Birthdate.HasValue)
+            if (!viewModel.Birthdate.HasValue)
                 return new ValidationResult(stringLocalizer["BirthDateRequired"]);
 
-            var age = DateTime.Today.Year - customer.Birthdate.Value.Year;
+            var age = DateTime.Today.Year - viewModel.Birthdate.Value.Year;
 
             return (age >= 18) ? ValidationResult.Success : new ValidationResult(stringLocalizer["CustomerAtLeast18Years"]);
         }

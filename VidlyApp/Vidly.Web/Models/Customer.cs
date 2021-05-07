@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Vidly.Web.ViewModels;
 
 namespace Vidly.Web.Models
 {
@@ -17,10 +18,23 @@ namespace Vidly.Web.Models
 
         // .NET Core 3 validation system changed. So make the properties nullable to perform NULL check
         [Required(ErrorMessage = "RequiredMembershipType")]
-        public byte? MembershipTypeId { get; set; }
+        public byte MembershipTypeId { get; set; }
         
-        [Min18YearsIfAMember]
+        
         [DataType(DataType.Date)]
         public DateTime? Birthdate { get; set; }
+
+        public static Customer FromViewModel(CustomerFormViewModel viewModel)
+        {
+            var newCustomer = new Customer
+            {
+                //Id = viewModel.Id.Value,
+                Name = viewModel.Name,
+                IsSubscribedToNewsletter = viewModel.IsSubscribedToNewsletter,
+                MembershipTypeId = viewModel.MembershipTypeId.Value,
+                Birthdate = viewModel.Birthdate.Value
+            };
+            return newCustomer;
+        }
     }
 }

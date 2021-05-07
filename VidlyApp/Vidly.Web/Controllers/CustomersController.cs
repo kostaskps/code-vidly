@@ -5,27 +5,40 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using Vidly.Web.Contracts;
 using Vidly.Web.DataAccess;
 using Vidly.Web.Models;
 using Vidly.Web.ViewModels;
 
 namespace Vidly.Web.Controllers
 {
-    public class CustomersController : Controller
+    public class CustomersController : BaseVidlyController
     {
         private VidlyDBContext _dbContext;
         private readonly IStringLocalizer<CustomersController> _stringLocalizer;
 
-        public CustomersController(VidlyDBContext dBContext, IStringLocalizer<CustomersController> localizer)
+        public CustomersController(VidlyDBContext dbContext, IProvideUnitOfWork unitOfWork, IStringLocalizer<CustomersController> localizer) : base(unitOfWork)
         {
-            _dbContext = dBContext;
+            _dbContext = dbContext;
             _stringLocalizer = localizer;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var customers = _dbContext.Customers.Include(c => c.MembershipType);
-            return View(customers);
+            var customersInDB = _dbContext.Customers;
+            var membershipTypesInDB = await UnitOfWork.MembershipTypes.GetAllAsync();
+
+            foreach (var customer in customersInDB)
+            {
+                foreach (var membershipType in membershipTypesInDB)
+                {
+                    if (membershipType.Id != customer.MembershipTypeId)
+                        continue;
+                    customer.MembershipType.Name = _stringLocalizer[membershipType.Name];
+                }
+            }
+
+            return View(customersInDB);
         }
 
         [Route("customers/details/{id?}")]
@@ -42,20 +55,9 @@ namespace Vidly.Web.Controllers
 
         public async Task<IActionResult> New()
         {
-            var membershipTypesInDB = await _dbContext.MembershipTypes.ToListAsync();
-
-            var list = new List<SelectListItem>();
-
-            foreach (var membershipType in membershipTypesInDB)
-            {
-                string localizedText = _stringLocalizer[membershipType.Name];
-                list.Add(new SelectListItem(localizedText, membershipType.Id.ToString()));
-            }
-
             var viewModel = new CustomerFormViewModel
             {
-                Customer = new Customer(),
-                MembershipTypesList = list
+                MembershipTypesList = await GetLocalizedMembershipTypesDropDownAsync()
             };
 
             return View("CustomerForm", viewModel);
@@ -67,14 +69,13 @@ namespace Vidly.Web.Controllers
             if (!Id.HasValue)
                 return NotFound();
 
-            var customer = await _dbContext.Customers.SingleOrDefaultAsync(c => c.Id == Id);
-            if (customer == null)
+            var customerInDB = await _dbContext.Customers.SingleOrDefaultAsync(c => c.Id == Id);
+            if (customerInDB == null)
                 return NotFound();
 
-            var viewModel = new CustomerFormViewModel
+            var viewModel = new CustomerFormViewModel(customerInDB)
             {
-                Customer = customer,
-                MembershipTypes = await _dbContext.MembershipTypes.ToListAsync()
+                MembershipTypesList = await GetLocalizedMembershipTypesDropDownAsync()
             };
 
             return View("CustomerForm", viewModel);
@@ -90,38 +91,43 @@ namespace Vidly.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var membershipTypesInDB = await _dbContext.MembershipTypes.ToListAsync();
-
-                var list = new List<SelectListItem>();
-
-                foreach (var membershipType in membershipTypesInDB)
-                {
-                    string localizedText = _stringLocalizer[membershipType.Name];
-                    list.Add(new SelectListItem(localizedText, membershipType.Id.ToString()));
-                }
-
                 var viewModel = new CustomerFormViewModel
                 {
-                    Customer = vm.Customer,
-                    //SelectedMembershipType = vm.SelectedMembershipType,
-                    MembershipTypesList = list
+                    MembershipTypesList = await GetLocalizedMembershipTypesDropDownAsync()
                 };
 
                 return View("CustomerForm", viewModel);
             }
 
-            if (vm.Customer.Id == 0)
-                _dbContext.Customers.Add(vm.Customer);
+            if (vm.Id == 0)
+            {
+                var newCustomer = Customer.FromViewModel(vm);
+                _dbContext.Customers.Add(newCustomer);
+            }
             else
             {
-                var customerInDB = await _dbContext.Customers.SingleOrDefaultAsync(c => c.Id == vm.Customer.Id);
-                customerInDB.Name = vm.Customer.Name;
-                customerInDB.Birthdate = vm.Customer.Birthdate;
-                customerInDB.MembershipTypeId = vm.Customer.MembershipTypeId;
-                customerInDB.IsSubscribedToNewsletter = vm.Customer.IsSubscribedToNewsletter;
+                var customerInDB = await _dbContext.Customers.SingleOrDefaultAsync(c => c.Id == vm.Id);
+                customerInDB.Name = vm.Name;
+                customerInDB.Birthdate = vm.Birthdate.Value;
+                customerInDB.MembershipTypeId = vm.MembershipTypeId.Value;
+                customerInDB.IsSubscribedToNewsletter = vm.IsSubscribedToNewsletter;
             }
             await _dbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        private async Task<IEnumerable<SelectListItem>> GetLocalizedMembershipTypesDropDownAsync()
+        {
+            var membershipTypesInDB = await UnitOfWork.MembershipTypes.GetAllAsync();
+
+            var localizedItemList = new List<SelectListItem>(membershipTypesInDB.Count);
+
+            var enumerator = membershipTypesInDB.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                localizedItemList.Add(new SelectListItem(_stringLocalizer[enumerator.Current.Name], enumerator.Current.Id.ToString()));
+            }
+            return localizedItemList;
         }
 
         protected override void Dispose(bool disposing)
