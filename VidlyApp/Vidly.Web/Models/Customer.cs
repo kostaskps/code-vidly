@@ -24,7 +24,7 @@ namespace Vidly.Web.Models
         [DataType(DataType.Date)]
         public DateTime? Birthdate { get; set; }
 
-        public static Customer FromViewModel(CustomerFormViewModel viewModel)
+        public static Customer CreateFromViewModel(CustomerFormViewModel viewModel)
         {
             var newCustomer = new Customer
             {

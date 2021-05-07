@@ -101,7 +101,7 @@ namespace Vidly.Web.Controllers
 
             if (vm.Id == 0)
             {
-                var newCustomer = Customer.FromViewModel(vm);
+                var newCustomer = Customer.CreateFromViewModel(vm);
                 _dbContext.Customers.Add(newCustomer);
             }
             else
