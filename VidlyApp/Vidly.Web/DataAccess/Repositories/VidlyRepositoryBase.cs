@@ -31,7 +31,7 @@ namespace Vidly.Web.DataAccess.Repositories
             return VidlyDbContext.Set<T>().ToList();
         }
 
-        public async Task<List<T>> GetAllAsync()
+        public async Task<IList<T>> GetAllAsync()
         {
             return await VidlyDbContext.Set<T>().ToListAsync().ConfigureAwait(false);
         }
