@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Vidly.Web.Contracts;
 
 namespace Vidly.Web.DataAccess
@@ -15,9 +12,12 @@ namespace Vidly.Web.DataAccess
         {
             _context = context;
             Genres = new Repositories.GenresRepository(_context);
+            MembershipTypes = new Repositories.MembershipTypesRepository(_context);
         }
 
         public IProvideGenres Genres { get; private set; }
+
+        public IProvideMembershipTypes MembershipTypes { get; private set; }
 
         /// <summary>
         /// Save all changes to the Vidly Database
