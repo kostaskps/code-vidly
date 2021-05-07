@@ -33,7 +33,10 @@ namespace Vidly.Web
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // Enable Localization Middleware
-            app.UseRequestLocalization(app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>().Value);
+            // Use the better GetRequiredService method as it throws error if it returns NULL.
+            // If GetService returns null, you have to mannualy handle the error
+            // https://andrewlock.net/the-difference-between-getservice-and-getrquiredservice-in-asp-net-core/
+            app.UseRequestLocalization(app.ApplicationServices.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value);
 
             if (env.IsDevelopment())
             {
