@@ -123,6 +123,9 @@
   <data name="CustomerName" xml:space="preserve">
     <value>Customer Name</value>
   </data>
+  <data name="EditCustomer" xml:space="preserve">
+    <value>Edit Customer</value>
+  </data>
   <data name="IsSubscribedToNewsletter" xml:space="preserve">
     <value>Subscribed to Newsletter?</value>
   </data>

@@ -123,6 +123,9 @@
   <data name="CustomerName" xml:space="preserve">
     <value>Όνομα Πελάτη</value>
   </data>
+  <data name="EditCustomer" xml:space="preserve">
+    <value>Επεξεργασία Πελάτη</value>
+  </data>
   <data name="IsSubscribedToNewsletter" xml:space="preserve">
     <value>Εγγεγραμένος στις ενημερώσεις;</value>
   </data>
