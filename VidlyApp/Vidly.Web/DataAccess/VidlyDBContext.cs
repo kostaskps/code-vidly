@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Vidly.Web.Extensions;
 using Vidly.Web.Models;
 
 namespace Vidly.Web.DataAccess

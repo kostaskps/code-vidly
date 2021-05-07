@@ -3,7 +3,7 @@ using Vidly.Web.Models;
 
 // Seeding EF Core data: https://www.learnentityframeworkcore.com/migrations/seeding
 
-namespace Vidly.Web.DataAccess
+namespace Vidly.Web.Extensions
 {
     public static class ModelBuilderExtensions
     {
