@@ -104,10 +104,7 @@ namespace Vidly.Web.Controllers
 
             if (vm.Id == 0)
             {
-                var newMovie = new Movie(vm)
-                {
-                    DateAdded = DateTime.Now
-                };
+                var newMovie = Movie.CreateFromViewModel(vm);
                 _dbContext.Movies.Add(newMovie);
             }
             else

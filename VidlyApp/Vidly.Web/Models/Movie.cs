@@ -1,23 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Vidly.Web.ViewModels;
 
 namespace Vidly.Web.Models
 {
     public class Movie
     {
-        public Movie()
-        {
-
-        }
-        public Movie(ViewModels.MovieFormViewModel viewModel)
-        {
-            Id = viewModel.Id.Value;
-            Name = viewModel.Name;
-            ReleaseDate = viewModel.ReleaseDate.Value;
-            StockNumber = viewModel.StockNumber.Value;
-            GenreId = viewModel.GenreId.Value;
-        }
-
         public int Id { get; set; }
 
         [Required(ErrorMessage = "RequiredMovieName")]
@@ -37,5 +25,19 @@ namespace Vidly.Web.Models
         public byte GenreId { get; set; }
         
         public Genre Genre { get; set; }
+
+        public static Movie CreateFromViewModel(MovieFormViewModel viewModel)
+        {
+            var newMovie = new Movie
+            {
+                //Id = viewModel.Id.Value,
+                Name = viewModel.Name,
+                ReleaseDate = viewModel.ReleaseDate.Value,
+                StockNumber = viewModel.StockNumber.Value,
+                GenreId = viewModel.GenreId.Value,
+                DateAdded = DateTime.Now
+            };
+            return newMovie;
+        }
     }
 }
